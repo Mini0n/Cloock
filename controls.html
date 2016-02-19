@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cloock Controls Test</title>
+  
+  <style>
+
+    body {
+      text-align: center; 
+      font-family: monospace;
+    }
+
+    pre { margin: 0px; }
+
+    .display, .log {
+      /*display: inline-block;*/
+      border: 1px solid #666;
+      padding: 4px;
+      margin: auto;
+      width: 250px;
+    }
+
+    .displays, .inputs, .alarms {
+      display: block;
+      padding: 4px;
+    }
+    
+    .segment, .button {
+      display: inline-block;
+      border: 1px solid #666; 
+      padding: 4px;
+      margin: 0px;
+      width: 30px;
+      height: 15px;
+    }
+
+    .segmentNum, .segmentDot {
+      display: inline-block;
+    }
+
+    .alarm {
+      display: inline-block;
+      border: 1px solid #666; 
+      padding: 4px;
+      margin: 0px;
+      width: 40px;
+      height: 15px;
+    }
+
+/*    .button {
+      display: inline-block;
+      border: 1px solid #666; 
+      padding: 4px;
+      margin: 0px;
+    }
+*/
+  </style>
+
+</head>
+<body>
+  
+  <div class="display" id="display">
+    <div class="displays" id="displays">
+      <div class="segment" id="segment0">
+        <div class="segmentNum" id="segmentNum0">0</div>
+        <div class="segmentDot" id="segmentDot0">.</div>
+      </div>
+      <div class="segment" id="segment1">
+        <div class="segmentNum" id="segmentNum1">0</div>
+        <div class="segmentDot" id="segmentDot1">.</div>
+      </div>
+      <div class="segment" id="segment5">:</div>
+      <div class="segment" id="segment2">
+        <div class="segmentNum" id="segmentNum2">0</div>
+        <div class="segmentDot" id="segmentDot2">.</div>
+      </div>
+      <div class="segment" id="segment3">
+        <div class="segmentNum" id="segmentNum3">0</div>
+        <div class="segmentDot" id="segmentDot3">.</div>
+      </div>
+    </div>
+    <div class="inputs" id="inputs">
+      <div class="button" id="button0" onclick="button0();">o</div>
+      <div class="button" id="button1" onclick="button1();">+</div>
+      <div class="button" id="button2" onclick="button2();">-</div>
+      <div class="button" id="button3" onclick="button3();">x</div>
+    </div>
+    <div class="alarms" id="alarms">
+      <div class="alarm" id="alarm0">60:60</div>
+      <div class="alarm" id="alarm1">60:60</div>
+      <div class="alarm" id="alarm2">60:60</div>
+      <div class="alarm" id="alarm3">60:60</div>
+    </div>
+  </div>
+  <div class="display" id="display">
+  <textarea name="logText" id="logText" cols="30" rows="10"></textarea>
+  </div>
+
+
+
+</body>
+
+<script>
+
+  /*--- Clock vars ---*/
+  var hora0 = 0; var hora1 = 0;
+  var minu0 = 0; var minu1 = 0;
+  var segu0 = 0; var segu1 = 0;
+  /*--- Alarm vars ---*/
+  var alarm0 = 6060;
+  var alarm1 = 6060;
+  var alarm2 = 6060;
+  var alarm3 = 6060;
+
+  
+  function tick(){
+    setInterval(function(){
+      segu0++;
+      if (segu0>9){ segu1++; segu0=0;
+      if (segu1>5){ minu0++; segu1=0;
+      if (minu0>9){ minu1++; minu0=0;
+      if (minu1>5){ hora0++; minu1=0;
+      if (hora0>3){ 
+      if (hora0>9){ hora1++; hora0=0; } else {
+      if (hora1>1){ hora1=0; hora0=0; }}}}}}}
+      console.log(hora1+''+hora0+':'+minu1+''+minu0+':'+segu1+''+segu0);
+    }, 1000);
+  }
+
+  function button0(){
+    // console.log('-> button0');
+    blinkAll();
+  }
+
+  function button1(){
+    // console.log('-> button1');
+    blinkAll();
+  }
+
+  function button2(){
+    // console.log('-> button2');
+    blinkAll();
+  }
+
+  function button3(){
+    // console.log('-> button3');
+    blinkAll();
+  }
+
+  function blink(divId, newText){
+    var el = document.getElementById(divId);
+    var txt = el.innerHTML;
+    el.innerHTML = newText;
+    setTimeout(function(){ el.innerHTML = txt; }, 100);
+  }
+
+  function blinkNumbers(){
+    blink('segment0','_');
+    blink('segment1','_');
+    blink('segment2','_');
+    blink('segment3','_');
+  }
+
+  function blinkDot(){
+    blink('segment5','_');
+  }
+
+  function blinkAll(){
+    blinkNumbers();
+    blinkDot();
+  }
+
+</script>
+
+
+</html>
